@@ -6,6 +6,9 @@
 
   --color-white: #fff;
   --color-black: #000;
+  --color-grey: rgb(154, 154, 154);
+  --color-transparent: rgba(0, 0, 0, 0.2);
+  --color-border: rgba(104, 104, 104, 0.384);
 }
 
 html,
@@ -16,7 +19,8 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: rgb(0, 85, 255);
+  background: linear-gradient(346deg, rgba(0, 85, 255, 1) 0%, rgba(0, 0, 0, 1) 48%, rgb(0, 22, 66) 100%);
   font-family: 'Poppins';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -9,7 +9,7 @@ export default function Header() {
                 <ul>
                     <li><Link href="/">Heim</Link></li>
                     <li><Link href="/categories">Flokkar</Link></li>
-                    <li><Link href="/">Senda inn spurningu</Link></li>
+                    <li><Link href="/create">Búa til flokk</Link></li>
                 </ul>
             </nav>
         </header>

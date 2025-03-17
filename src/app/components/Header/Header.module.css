@@ -8,11 +8,12 @@
     padding: 0.75rem 0.75rem 0.75rem 2rem;
     border-radius: 50px;
     align-items: center;
-    background: var(--color-white);
+    background: var(--color-transparent);
+    color: var(--color-white);
 }
 
 .header h1 {
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .header ul {
@@ -23,6 +24,7 @@
 }
 
 .header li {
+    font-weight: 400;
     list-style-type: none;
     transition: 0.3s ease-in-out;
 }
@@ -37,11 +39,11 @@
     color: var(--color-white);
     padding: 0.5rem;
     border-radius: 50px;
-    border: var(--background) 2px solid;
+    border: var(--background) 1px solid;
     transition: 0.3s ease-in-out;
 }
 
 .header li:hover:nth-child(3) {
     color: var(--background);
-    background: var(--color-white);
+    background: rgba(1,1,1,0.5);
 }

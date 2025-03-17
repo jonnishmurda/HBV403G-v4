@@ -2,11 +2,12 @@
     margin: 1rem 0;
     padding: 1rem;
     height: 100vh;
-    background: var(--color-white);
+    background: var(--color-transparent);
     border-radius: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    color: var(--color-white);
 }
 
 .homepage .content {
@@ -20,6 +21,7 @@
 
 .homepage p {
     text-align: end;
+    color: var(--color-grey);
 }
 
 .homepage .cards {
@@ -29,7 +31,7 @@
 
 .homepage .card {
     position: relative;
-    background: var(--background);
+    background: var(--color-transparent);
     border-radius: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -38,8 +40,50 @@
     color: var(--color-white);
     font-size: 32px;
     transition: 0.3s ease-in-out;
+    
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.homepage .card::after,
+.homepage .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    padding: 1px;
+    background: conic-gradient(from var(--angle), var(--background), var(--color-grey), var(--color-white), var(--color-transparent), var(--background));
+    -webkit-mask: linear-gradient(white 0 0) content-box, linear-gradient(white 0 0);
+    mask: linear-gradient(white 0 0) content-box, linear-gradient(white 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    animation: 10s spin linear infinite;
+    box-sizing: border-box;
+}
+
+.homepage .card:nth-child(2)::after {
+    background: conic-gradient(from var(--angle), var(--color-white), var(--color-transparent), var(--color-grey), rgba(0, 187, 255, 0.523), var(--color-white));
+    z-index: -1;
+}
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
 }
 
 .homepage .card:hover {
-    transform: translateX(-5px);
+    color: var(--background);
+    background: rgba(1, 1, 1, 0.5);
 }

@@ -1,6 +1,6 @@
 .categoryPage {
     height: 100vh;
-    background: var(--color-white);
+    background: var(--color-transparent);
     margin: 1rem 0;
     border-radius: 20px;
     padding: 1rem;

@@ -10,7 +10,7 @@ export default function HomePage() {
             </div>
             <div className={style.cards}>
                 <Link className={style.card} href={"/categories"}>Flokkar</Link>
-                <Link className={style.card} href={"/"}>Senda inn spurningu</Link>
+                <Link className={style.card} href={"/create"}>Búa til flokk</Link>
             </div>
         </section>
     );

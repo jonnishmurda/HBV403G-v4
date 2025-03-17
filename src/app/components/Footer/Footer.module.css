@@ -1,10 +1,11 @@
 .footer {
     padding: 1rem;
-    background: var(--color-white);
+    background: var(--color-transparent);
     border-radius: 20px 20px 0 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    color: var(--color-white);
 }
 
 .footer section {
@@ -16,11 +17,14 @@
 
 .footer h2 {
     font-weight: 500;
-    border-bottom: solid 2px var(--background);
+    border-bottom: solid 1px var(--background);
     width: fit-content;
     margin-bottom: 1rem;
 }
 
+.footer p {
+    color: var(--color-grey);
+}
 
 .footer section a {
     color: var(--background);

@@ -3,38 +3,43 @@
 }
 
 .categories h2 {
-    font-weight: 500;
+    font-weight: 400;
+    color: var(--color-white);
+    border-bottom: var(--color-border) 1px solid;
+    margin-bottom: 1rem;
 }
 
 .categories .cards {
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: 250px;
+    grid-template-columns: repeat(4, 1fr);
+
     gap: 8px;
 }
 
+.categories .cards > * {
+    aspect-ratio: 1 / 1; 
+    width: 100%; 
+}
+
 .card {
+    text-align: center;
     border-radius: 20px;
     color: var(--color-white);
-    background: var(--background);
+    background: var(--color-transparent);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 0.3s ease-in-out;
+    border: var(--color-border) 1px solid;
 }
 
-.card h3{
+.card h3 {
     font-weight: 400;
     font-size: 24px;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 5px 5px var(--color-black);
-}
-
-.card:active {
-    transform: 0;
-    box-shadow: none;
+    color: var(--background);
+    background: rgba(1, 1, 1, 0.5);
 }
