@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-const URL = ''
+import style from './Categories.module.css'
 
 type Category = {
     id: string
@@ -12,40 +11,33 @@ type Props = {
     title: string;
 }
 
-export default function Categories({ title }: Props) {
-
-    const categories: Array<Category> = [
-        {
-            id: '1',
-            slug: 'html',
-            name: 'html'
-        }, {
-            id: '2',
-            slug: 'css',
-            name: 'css'
-        }, {
-            id: '3',
-            slug: 'js',
-            name: 'js'
-        }
-    ]
-
-   
+export default async function Categories({ title }: Props) {
+    try {
+        let data = await fetch('https://hbv403g-v3.onrender.com/categories');
+        const categories: Array<Category> = await data.json();
 
 
-    return (
-        <section>
-            <h2>{title}</h2>
-            <p>Hérna koma flokkarnir</p>
-            <ul>
-                {
-                    categories.map((category, i) => (
-                        <li key={i}>
-                            <Link href={`/categories/${category.slug}`}>{category.name}</Link>
-                        </li>
-                    ))
-                }
-            </ul>
-        </section>
-    );
+        return (
+            <section className={style.categories}>
+                <h2>{title}</h2>
+                <ul className={style.cards}>
+                    {
+                        categories.map((i) => (
+                            <Link key={i.id} className={style.card} href={`/categories/${i.slug}`}>
+                                <h3>{i.name}</h3>
+                            </Link>
+                        ))
+                    }
+                </ul>
+            </section>
+        );
+    } catch (error) {
+        return (
+            <section>
+                <h2>loading</h2>
+            </section>
+        )
+    }
+
+
 }

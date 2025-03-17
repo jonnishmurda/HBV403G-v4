@@ -1,0 +1,40 @@
+.categories {
+    display: grid;
+}
+
+.categories h2 {
+    font-weight: 500;
+}
+
+.categories .cards {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: 250px;
+    gap: 8px;
+}
+
+.card {
+    border-radius: 20px;
+    color: var(--color-white);
+    background: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease-in-out;
+}
+
+.card h3{
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 5px var(--color-black);
+}
+
+.card:active {
+    transform: 0;
+    box-shadow: none;
+}

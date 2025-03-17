@@ -1,8 +1,9 @@
 import Link from "next/link";
+import style from './Header.module.css'
 
 export default function Header() {
     return (
-        <header>
+        <header className={style.header} >
             <Link href="/"><h1>Spurningalistasíðan</h1></Link>
             <nav>
                 <ul>

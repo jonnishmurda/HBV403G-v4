@@ -1,14 +1,16 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import style from '../page.module.css';
 import Header from "../components/Header/Header";
-import Categories from "../components/Categories/Categories";
+import CategoriesPage from "../components/CategoryPage/CategoryPage";
+import Footer from "../components/Footer/Footer";
 
 export default function Home() {
     return (
-        <>
+        <div className={style.page}>
             <Header />
-            <Categories title="Vinsælir flokkar" />
-        </>
+            <CategoriesPage />
+            <Footer />
+        </div>
     );
 }
 
