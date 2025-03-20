@@ -5,12 +5,12 @@ export default function Footer() {
     return (
         <footer className={style.footer}>
             <section>
-                <h2>Spurningalistasíðan</h2>
-                <p>Lærðu eitthvað nýtt eða birtu eigin spurningar! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae ullam animi provident obcaecati ad at accusamus eaque rem minus quibusdam ipsam, ipsa praesentium quo dolor repellendus dicta dolorum! Dignissimos, nostrum.</p>
+                <h2>Tenglar</h2>
+                <Link target='#' href="https://github.com/jonnishmurda/HBV403G-v4">GitHub</Link>
             </section>
             <section>
-                <h2>Tenglar</h2>
-                <Link target='#' href="https://github.com/jonnishmurda">GitHub</Link>
+                <h2>Spurningalistasíðan</h2>
+                <p>Lærðu eitthvað nýtt eða birtu eigin spurningar! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae ullam animi provident obcaecati ad at accusamus eaque rem minus quibusdam ipsam, ipsa praesentium quo dolor repellendus dicta dolorum! Dignissimos, nostrum.</p>
             </section>
         </footer>
     )

@@ -7,7 +7,6 @@ export default function CategoriesPage(){
     return (
         <section className={style.categoryPage}>
             <Categories title="Allir flokkar" />
-        
         </section>
     )
 }

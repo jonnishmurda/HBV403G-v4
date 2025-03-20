@@ -2,6 +2,7 @@
 
 :root {
   --background: #0055ff;
+  --background-darker: #131c30;
   --foreground: #171717;
 
   --color-white: #fff;
@@ -19,8 +20,8 @@ body {
 
 body {
   color: var(--foreground);
-  background: rgb(0, 85, 255);
-  background: linear-gradient(346deg, rgba(0, 85, 255, 1) 0%, rgba(0, 0, 0, 1) 48%, rgb(0, 22, 66) 100%);
+  background: var(--background);
+  background: linear-gradient(346deg, var(--background) 0%, rgba(0, 0, 0, 1) 48%, var(--background-darker) 100%);
   font-family: 'Poppins';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

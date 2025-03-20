@@ -1,7 +1,7 @@
 .homepage {
     margin: 1rem 0;
     padding: 1rem;
-    height: 100vh;
+    min-height: 100vh;
     background: var(--color-transparent);
     border-radius: 20px;
     display: grid;
@@ -17,6 +17,19 @@
 .homepage h2 {
     font-weight: 400;
     font-size: 64px;
+    background: linear-gradient(to right, var(--background), lightblue, var(--background), var(--color-white), var(--background));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 5px #0055ff58;
+    background-size: 200%;
+    animation: animate-gradient 10s linear infinite;
+}
+
+@keyframes animate-gradient {
+    to {
+        background-position: 200%;
+    }
 }
 
 .homepage p {
@@ -40,7 +53,7 @@
     color: var(--color-white);
     font-size: 32px;
     transition: 0.3s ease-in-out;
-    
+
 }
 
 @property --angle {
@@ -86,4 +99,40 @@
 .homepage .card:hover {
     color: var(--background);
     background: rgba(1, 1, 1, 0.5);
+}
+
+
+
+@media (max-width: 1000px) {
+    .homepage {
+        text-align: center;
+        grid-template-columns: 1fr;
+    }
+
+    .homepage h2 {
+        font-size: 48px;
+    }
+
+    .homepage p {
+        text-align: center;
+    }
+}
+
+@media (max-width: 500px) {
+    .homepage {
+        grid-template-columns: 1fr;
+    }
+
+    .homepage h2 {
+        text-align: center;
+        font-size: 32px;
+    }
+
+    .homepage p {
+        text-align: center;
+    }
+
+    .homepage .card {
+        font-size: 24px;
+    }
 }
