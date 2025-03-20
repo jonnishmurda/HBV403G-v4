@@ -1,55 +1,70 @@
-'use client'
+'use client';
 
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import style from "./Create.module.css";
 
 const URL = process.env.NEXT_PUBLIC_API_URL || "";
 
+type Answer = {
+    text: string;
+    correct: boolean;
+};
+
+type Question = {
+    text: string;
+    answers: Answer[];
+};
+
+type QuestionError = {
+    text?: string;
+    answers?: string;
+    correctAnswer?: string;
+};
+
+type ErrorsState = {
+    categoryName: string;
+    questions: QuestionError[];
+};
+
 export default function Create() {
-    const [categoryName, setCategoryName] = useState("");
-    const [questions, setQuestions] = useState([
+    const [categoryName, setCategoryName] = useState<string>("");
+    const [questions, setQuestions] = useState<Question[]>([
         { text: "", answers: [{ text: "", correct: false }, { text: "", correct: false }] }
     ]);
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [errors, setErrors] = useState({ categoryName: "", questions: [] });
+    const [loading, setLoading] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
+    const [errors, setErrors] = useState<ErrorsState>({ categoryName: "", questions: [] });
 
-    function validateForm() {
+    function validateForm(): boolean {
         let isValid = true;
-        let newErrors: any = { categoryName: "", questions: [] };
+        const newErrors: ErrorsState = { categoryName: "", questions: [] };
 
-        // Validate category name (min 3 chars, max 1024)
         if (categoryName.trim().length < 3 || categoryName.trim().length > 1024) {
             newErrors.categoryName = "Titill verður að hafa 3-1024 stafi.";
             isValid = false;
         }
 
-        // Validate each question
         questions.forEach((question, qIndex) => {
-            let questionErrors: any = { text: "", answers: "", correctAnswer: "" };
+            const questionErrors: QuestionError = {};
 
-            // Question text validation (min 5 chars, max 1024)
             if (question.text.trim().length < 5 || question.text.trim().length > 1024) {
                 questionErrors.text = "Spurning verður að hafa 5-1024 stafi.";
                 isValid = false;
             }
 
-            // At least 2 answers required, max 4
             if (question.answers.length < 2 || question.answers.length > 4) {
                 questionErrors.answers = "Spurning verður að hafa 2-4 svör.";
                 isValid = false;
             }
 
-            // Each answer must be at least 1 character and max 1024 characters
-            question.answers.forEach((answer, aIndex) => {
+            question.answers.forEach((answer) => {
                 if (answer.text.trim().length < 1 || answer.text.trim().length > 1024) {
                     questionErrors.answers = "Svar verður að hafa 1-1024 stafi.";
                     isValid = false;
                 }
             });
 
-            // At least one correct answer required
             if (!question.answers.some((answer) => answer.correct)) {
                 questionErrors.correctAnswer = "Veldu að minnsta kosti eitt rétt svar.";
                 isValid = false;
@@ -62,17 +77,17 @@ export default function Create() {
         return isValid;
     }
 
-    function addQuestion() {
+    function addQuestion(): void {
         setQuestions([...questions, { text: "", answers: [{ text: "", correct: false }, { text: "", correct: false }] }]);
     }
 
-    function updateQuestion(index, value) {
+    function updateQuestion(index: number, value: string): void {
         const newQuestions = [...questions];
         newQuestions[index].text = value;
         setQuestions(newQuestions);
     }
 
-    function addAnswer(questionIndex) {
+    function addAnswer(questionIndex: number): void {
         const newQuestions = [...questions];
         if (newQuestions[questionIndex].answers.length < 4) {
             newQuestions[questionIndex].answers.push({ text: "", correct: false });
@@ -80,13 +95,13 @@ export default function Create() {
         }
     }
 
-    function updateAnswer(questionIndex, answerIndex, value) {
+    function updateAnswer(questionIndex: number, answerIndex: number, value: string): void {
         const newQuestions = [...questions];
         newQuestions[questionIndex].answers[answerIndex].text = value;
         setQuestions(newQuestions);
     }
 
-    function toggleCorrect(questionIndex, answerIndex) {
+    function toggleCorrect(questionIndex: number, answerIndex: number): void {
         const newQuestions = [...questions];
 
         newQuestions[questionIndex].answers = newQuestions[questionIndex].answers.map((answer, idx) => ({
@@ -97,7 +112,7 @@ export default function Create() {
         setQuestions(newQuestions);
     }
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         if (!validateForm()) {
@@ -131,9 +146,12 @@ export default function Create() {
             setCategoryName("");
             setQuestions([{ text: "", answers: [{ text: "", correct: false }, { text: "", correct: false }] }]);
         } catch (error) {
-            console.error("❌ Error creating quiz", error.response?.data || error.message);
-            if (error.response?.data?.error === "Category name already exists!") {
-                setErrors((prev) => ({ ...prev, categoryName: "Flokkur með þessu nafni er þegar til!" }));
+            const axiosError = error as AxiosError<{ error?: string }>;
+
+            console.error("Error creating quiz", axiosError.response?.data || axiosError.message);
+
+            if (axiosError.response?.data?.error === "Flokkur með þetta nafn er þegar til") {
+                setErrors((prev) => ({ ...prev, categoryName: "Flokkur með þetta nafni er þegar til!" }));
             } else {
                 setMessage("Ekki tókst að búa til flokk.");
             }
@@ -195,8 +213,7 @@ export default function Create() {
                                         </label>
                                     </div>
                                 ))}
-                                {errors.questions[qIndex]?.answers && <p className={style.error}>{errors.questions[qIndex].answers}</p>}
-                                {errors.questions[qIndex]?.correctAnswer && <p className={style.error}>{errors.questions[qIndex].correctAnswer}</p>}
+
                                 {question.answers.length < 4 && (
                                     <button type="button" onClick={() => addAnswer(qIndex)} className={style.addButton}>
                                         + Bæta við svari
@@ -205,6 +222,10 @@ export default function Create() {
                             </div>
                         </div>
                     ))}
+
+                    <button type="button" onClick={addQuestion} className={style.addButton}>
+                        + Bæta við spurningu
+                    </button>
 
                     <button type="submit" className={style.submitButton} disabled={loading}>
                         {loading ? "Býr til..." : "Búa til flokk"}

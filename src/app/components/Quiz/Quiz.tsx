@@ -2,7 +2,6 @@
 
 import style from './Quiz.module.css';
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Link from 'next/link';
 
 const URL = process.env.NEXT_PUBLIC_API_URL || "";
@@ -26,10 +25,7 @@ type Question = {
     answers: Answer[];
 };
 
-export default function Quiz() {
-    const params = useParams();
-    const slug = params?.slug as string;
-
+export default function Quiz({ slug }: { slug: string }) {
     const [category, setCategory] = useState<Category | null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loading, setLoading] = useState(true);
@@ -59,21 +55,14 @@ export default function Quiz() {
         fetchData();
     }, [slug]);
 
-    const handleAnswerClick = (questionId: string, answerId: string, isCorrect: boolean) => {
-        if (selectedAnswers[questionId]) return; // Prevent multiple selections
+    const handleAnswerClick = (questionId: string, answerId: string) => {
+        if (selectedAnswers[questionId]) return;
 
         setSelectedAnswers((prev) => ({
             ...prev,
-            [questionId]: answerId, // Store selected answer ID
+            [questionId]: answerId,
         }));
     };
-
-    if (!slug) return (
-        <section className={style.loading}>
-            <h1>Sækir spurningar</h1>
-            <span>.</span><span>.</span><span>.</span>
-        </section>
-    );
 
     if (loading) return (
         <section className={style.loading}>
@@ -98,7 +87,7 @@ export default function Quiz() {
                                             ? style.correct
                                             : style.incorrect
                                         : ""}`}
-                                    onClick={() => handleAnswerClick(question.id, answer.id, answer.correct)}
+                                    onClick={() => handleAnswerClick(question.id, answer.id)}
                                     disabled={!!selectedAnswers[question.id]}
                                 >
                                     {answer.text}

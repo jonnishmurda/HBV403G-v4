@@ -1,4 +1,3 @@
-import Image from "next/image";
 import style from '../page.module.css';
 import Header from "../components/Header/Header";
 import CategoriesPage from "../components/CategoriesPage/CategoryPage";
