@@ -32,10 +32,11 @@
     border: var(--color-border) solid 1px;
     background: var(--color-transparent);
     border-radius: 20px;
-    padding: 0.25rem 1rem;
+    padding: 0.75rem 1rem;
     width: 75%;
     transition: 0.3s;
     cursor: pointer;
+    text-align: start;
 }
 
 .quiz .answer:hover {
@@ -51,6 +52,23 @@
 .quiz .backBtn:hover {
     color: var(--color-white);
 }
+
+.correct {
+    border-color: green !important;
+    background: rgba(0, 255, 0, 0.1) !important;
+    color: green !important;
+}
+
+.incorrect {
+    border-color: red !important;
+    background: rgba(255, 0, 0, 0.1) !important;
+    color: red !important;
+}
+
+.answer:disabled {
+    opacity: 0.6;
+}
+
 
 
 

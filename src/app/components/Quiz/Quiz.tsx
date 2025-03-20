@@ -33,6 +33,7 @@ export default function Quiz() {
     const [category, setCategory] = useState<Category | null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedAnswers, setSelectedAnswers] = useState<{ [key: string]: string | null }>({});
 
     useEffect(() => {
         if (!slug) return;
@@ -40,7 +41,7 @@ export default function Quiz() {
         const fetchData = async () => {
             try {
                 const res = await fetch(`${URL}/categories/${slug}`);
-                const data = await fetch(`https://hbv403g-v3.onrender.com/categories/${slug}/questions`);
+                const data = await fetch(`${URL}/categories/${slug}/questions`);
 
                 if (!res.ok || !data.ok) {
                     throw new Error("Data not found");
@@ -58,18 +59,28 @@ export default function Quiz() {
         fetchData();
     }, [slug]);
 
+    const handleAnswerClick = (questionId: string, answerId: string, isCorrect: boolean) => {
+        if (selectedAnswers[questionId]) return; // Prevent multiple selections
+
+        setSelectedAnswers((prev) => ({
+            ...prev,
+            [questionId]: answerId, // Store selected answer ID
+        }));
+    };
+
     if (!slug) return (
         <section className={style.loading}>
             <h1>Sækir spurningar</h1>
             <span>.</span><span>.</span><span>.</span>
         </section>
-    )
+    );
+
     if (loading) return (
         <section className={style.loading}>
             <h1>Sækir spurningar</h1>
             <span>.</span><span>.</span><span>.</span>
         </section>
-    )
+    );
 
     return (
         <section className={style.quiz}>
@@ -80,9 +91,18 @@ export default function Quiz() {
                         <h3>{question.text}</h3>
                         <div className={style.answers}>
                             {question.answers.map((answer) => (
-                                <p className={style.answer} key={answer.id}>
+                                <button
+                                    key={answer.id}
+                                    className={`${style.answer} ${selectedAnswers[question.id] === answer.id
+                                        ? answer.correct
+                                            ? style.correct
+                                            : style.incorrect
+                                        : ""}`}
+                                    onClick={() => handleAnswerClick(question.id, answer.id, answer.correct)}
+                                    disabled={!!selectedAnswers[question.id]}
+                                >
                                     {answer.text}
-                                </p>
+                                </button>
                             ))}
                         </div>
                     </div>
